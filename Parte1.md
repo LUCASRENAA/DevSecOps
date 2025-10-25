@@ -55,3 +55,5 @@ Aviso: usar IA para priorização é auxiliar — confirme sempre com análise h
 - Bandit — https://github.com/PyCQA/bandit
 - OWASP ZAP — https://www.zaproxy.org
 - Ollama / TinyLlama — documentação do projeto Ollama
+- Apresentação / Material adicional — https://www.canva.com/design/DAGygZcn5fY/ojToLZGunskpte76EvvPQA/edit?utm_content=DAGygZcn5fY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
