@@ -1,0 +1,937 @@
+{
+  "version": "2.5.0",
+  "summary": {
+    "title": "Sistema de Cambio",
+    "owner": "Lucas",
+    "description": "A aplicação vai ser responsável por informar o valor de moedas estrangeiras para real",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "Visualizar Cambio",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.5.0",
+        "cells": [
+          {
+            "position": {
+              "x": 10.999999999995453,
+              "y": -319.99999999999864
+            },
+            "size": {
+              "width": 350,
+              "height": 390
+            },
+            "attrs": {
+              "label": {
+                "text": "Internet"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "id": "c5d0dc8f-83e7-4abc-bf4b-468c2f5c311a",
+            "zIndex": -1,
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Internet",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 429.9999999999983,
+              "y": -319.99999999999864
+            },
+            "size": {
+              "width": 350,
+              "height": 450
+            },
+            "attrs": {
+              "label": {
+                "text": "AWS - Intranet"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "id": "78286397-caf3-4854-9166-62535b242235",
+            "zIndex": -1,
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "AWS - Intranet",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 849.9999999999999,
+              "y": -199.99999999999937
+            },
+            "size": {
+              "width": 270,
+              "height": 280
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "id": "7cc0c9e0-f051-4de1-99d9-d6dc867b20d9",
+            "zIndex": -1,
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Trust Boundary",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 110,
+              "y": -140.00000000000003
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Usuário"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "1ba3dc23-b5c9-4fa0-a76a-d578b78fb4bc"
+                },
+                {
+                  "group": "right",
+                  "id": "f45e359f-88bd-4897-baa4-0009a9939969"
+                },
+                {
+                  "group": "bottom",
+                  "id": "35e8e09f-65bf-4725-bfd1-3800b45faadf"
+                },
+                {
+                  "group": "left",
+                  "id": "b13d8b3e-10e0-496d-9602-b16cfcc8fc80"
+                }
+              ]
+            },
+            "id": "f10ef133-a256-4138-a6c0-65bd68fccb55",
+            "zIndex": 1,
+            "data": {
+              "type": "tm.Actor",
+              "name": "Usuário",
+              "description": "",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 460,
+              "y": -250.00000000000003
+            },
+            "size": {
+              "width": 200,
+              "height": 170
+            },
+            "attrs": {
+              "text": {
+                "text": "Sistema de Cambio"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "14b847a9-b6b0-483e-a257-5ce35b86814a"
+                },
+                {
+                  "group": "right",
+                  "id": "e601a18c-ce08-4a88-90b4-f3815420edb2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "3285fb1b-add1-412a-94d2-1521b49d5605"
+                },
+                {
+                  "group": "left",
+                  "id": "f5725f8f-3320-42ca-9080-0375d762ed6d"
+                }
+              ]
+            },
+            "id": "c4d3e2d2-ddaa-4f71-a1b0-7a746b1defdf",
+            "zIndex": 2,
+            "data": {
+              "type": "tm.Process",
+              "name": "Sistema de Cambio",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "16e75ee7-7bad-454d-be78-046c919368d6",
+                  "title": "Usuário afirma que o sistema disponibilizou a cotação errada",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Repudiation",
+                  "description": "Usuário pode dizer que seguiu a recomendações do sistema de cambio e foi induzido ao erro e foi lesado com prejuízo financeiro",
+                  "mitigation": "Gravar historico das cotações em banco por 30 dias",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 7,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 0,
+                "tampering": 0,
+                "repudiation": 2,
+                "informationDisclosure": 0,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 0
+              }
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Data Flow"
+            ],
+            "id": "4cc540e1-fcf5-47ff-aadd-b77a84f6fbf8",
+            "source": {
+              "cell": "c4d3e2d2-ddaa-4f71-a1b0-7a746b1defdf",
+              "port": "14b847a9-b6b0-483e-a257-5ce35b86814a"
+            },
+            "target": {
+              "cell": "edc722d0-5170-4cb5-86ab-d740d94b0e19",
+              "port": "14b847a9-b6b0-483e-a257-5ce35b86814a"
+            },
+            "vertices": [
+              {
+                "x": 820,
+                "y": -260
+              },
+              {
+                "x": 920,
+                "y": -170
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Data Flow"
+            ],
+            "id": "394c9a9f-9ee0-42be-bbf3-c041c29993e5",
+            "source": {
+              "cell": "f10ef133-a256-4138-a6c0-65bd68fccb55",
+              "port": "35e8e09f-65bf-4725-bfd1-3800b45faadf"
+            },
+            "target": {
+              "cell": "c4d3e2d2-ddaa-4f71-a1b0-7a746b1defdf",
+              "port": "3285fb1b-add1-412a-94d2-1521b49d5605"
+            },
+            "vertices": [
+              {
+                "x": 490,
+                "y": -40
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Usuario -> Sistema de Cambio",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Usuario -> Sistema de Cambio"
+            ],
+            "id": "02d9e656-cb72-43e6-a8d7-4367a79dc9ea",
+            "source": {
+              "cell": "f10ef133-a256-4138-a6c0-65bd68fccb55",
+              "port": "1ba3dc23-b5c9-4fa0-a76a-d578b78fb4bc"
+            },
+            "target": {
+              "cell": "c4d3e2d2-ddaa-4f71-a1b0-7a746b1defdf",
+              "port": "f5725f8f-3320-42ca-9080-0375d762ed6d"
+            },
+            "vertices": [
+              {
+                "x": 310,
+                "y": -230
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "62f37bdf-2716-42ff-a001-bcba75a72a37",
+                  "title": "Comunicação sem criptografia",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Information disclosure",
+                  "description": "Um hacker ameaça pode ler informações enviadas do Sistema de cambio para a biblioteca se não houver criptografia na comunicação",
+                  "mitigation": "Usar TLS 1.2 ou mais na comunicação",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 0,
+                "informationDisclosure": 3,
+                "denialOfService": 0
+              }
+            },
+            "labels": [
+              "Data Flow"
+            ],
+            "id": "f63ee510-4689-4aa3-9e10-fe9080484833",
+            "source": {
+              "cell": "c4d3e2d2-ddaa-4f71-a1b0-7a746b1defdf",
+              "port": "e601a18c-ce08-4a88-90b4-f3815420edb2"
+            },
+            "target": {
+              "cell": "edc722d0-5170-4cb5-86ab-d740d94b0e19",
+              "port": "f5725f8f-3320-42ca-9080-0375d762ed6d"
+            },
+            "vertices": [
+              {
+                "x": 820,
+                "y": -70
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Data Flow"
+            ],
+            "id": "d0dbb7a8-102a-4758-9eaa-14c97dd373df",
+            "source": {
+              "x": 579,
+              "y": -80
+            },
+            "target": {
+              "cell": "855d4a64-2124-4f73-b761-91f2df59407b",
+              "port": "63d9c83c-5f80-48ad-9b1d-330bbaabc32b"
+            },
+            "vertices": [
+              {
+                "x": 670,
+                "y": -50
+              }
+            ]
+          },
+          {
+            "position": {
+              "x": 939.9999999999999,
+              "y": -134.99999999999864
+            },
+            "size": {
+              "width": 90,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Biblioteca"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "14b847a9-b6b0-483e-a257-5ce35b86814a"
+                },
+                {
+                  "group": "right",
+                  "id": "e601a18c-ce08-4a88-90b4-f3815420edb2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "3285fb1b-add1-412a-94d2-1521b49d5605"
+                },
+                {
+                  "group": "left",
+                  "id": "f5725f8f-3320-42ca-9080-0375d762ed6d"
+                }
+              ]
+            },
+            "id": "edc722d0-5170-4cb5-86ab-d740d94b0e19",
+            "zIndex": 11,
+            "data": {
+              "type": "tm.Process",
+              "name": "Biblioteca",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "406ea2b0-aac1-49b4-ae84-c21456efef84",
+                  "title": "Biblioteca - Fora do ar",
+                  "status": "Open",
+                  "severity": "Critical",
+                  "type": "Spoofing",
+                  "description": "A biblioteca pode parar de funcionar por varios motivos, por aplicação fazer diversas requisições ou por indisponibilidade no proprio servidor.",
+                  "mitigation": "Utilize uma segunda biblioteca para garantir informações atualizados ou armazene informações no banco de dados para pelo menos guardar um historico de cotação e exibir para o usuário a ultima cotacão disponivel.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 5,
+                  "score": ""
+                },
+                {
+                  "id": "fedb71df-99a0-48c9-b93f-2fee0ecc179c",
+                  "title": "Alteração do valor do cambio de forma indevida",
+                  "status": "Open",
+                  "severity": "Critical",
+                  "type": "Tampering",
+                  "description": "Um atacante pode editar valores da cotação atual na biblioteca fornecida",
+                  "mitigation": "Se o valor estiver discrepante com os valores antigos, avaliar se na segunda biblioteca está no mesmo valor",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 6,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 1,
+                "tampering": 1,
+                "repudiation": 0,
+                "informationDisclosure": 0,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 610,
+              "y": 50
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "63d9c83c-5f80-48ad-9b1d-330bbaabc32b"
+                },
+                {
+                  "group": "right",
+                  "id": "1f7acc8b-2a38-4d46-a621-f14ac5668e3e"
+                },
+                {
+                  "group": "bottom",
+                  "id": "a315950f-55b7-47aa-890f-38d0aa209826"
+                },
+                {
+                  "group": "left",
+                  "id": "3b016871-4749-41e5-b54e-db102eb5a5e7"
+                }
+              ]
+            },
+            "id": "855d4a64-2124-4f73-b761-91f2df59407b",
+            "zIndex": 13,
+            "data": {
+              "type": "tm.Store",
+              "name": "Store",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "18d1cf70-1dbe-4bae-9bb9-f8cc0ad773a9",
+                  "title": "Leitura de senhas no banco de dados",
+                  "status": "Open",
+                  "severity": "Critical",
+                  "type": "Information disclosure",
+                  "description": "Um hacker poderia explorar uma vulnerabilidade no sistema de cambio ao acessar o banco de dados de forma indevida",
+                  "mitigation": "Armazenar as senhas de usuarios com funcão hash+salt",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 4,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 1,
+                "denialOfService": 0
+              }
+            }
+          }
+        ],
+        "description": "A aplicação vai ser responsável por informar o valor de moedas estrangeiras para real"
+      }
+    ],
+    "diagramTop": 2,
+    "reviewer": "Meira",
+    "threatTop": 7
+  }
+}
