@@ -1,0 +1,104 @@
+
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Relatório de Auditoria PII - http://127.0.0.1:8000/testeapp/Pessoa/</title>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f9; }
+            .container { max-width: 1200px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+            h1 { color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; }
+            h2 { color: #3b82f6; margin-top: 30px; }
+            .confidential { 
+                background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; 
+                padding: 15px; margin-bottom: 25px; border-radius: 4px; font-weight: bold;
+                text-align: center; font-size: 1.1em;
+            }
+            .summary-box { display: flex; justify-content: space-around; margin: 20px 0; gap: 20px; }
+            .summary-item { padding: 20px; border-radius: 6px; flex: 1; text-align: center; font-size: 1.1em; }
+            .valid { background-color: #ffe0e0; border: 1px solid #ef4444; color: #7f1d1d; } /* Alto Risco - Vermelho */
+            .suspect { background-color: #fef3c7; border: 1px solid #fbbd23; color: #92400e; } /* Potencial - Amarelo/Laranja */
+            .count { font-size: 2.5em; font-weight: bold; display: block; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+            th { background-color: #eff6ff; color: #1e3a8a; }
+            .pii-confirmed td { background-color: #ffebeb; font-weight: bold; color: #b91c1c; } /* Linhas da tabela VERMELHO CLARO */
+            .pii-suspect td { background-color: #fffbef; }
+            code { background-color: #eee; padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="confidential">
+                AVISO: DOCUMENTO ESTRITAMENTE CONFIDENCIAL. CONTÉM INFORMAÇÕES SENSÍVEIS SOBRE VAZAMENTO DE PII.
+            </div>
+            <h1>Relatório de Auditoria de PII da API</h1>
+            <p><strong>URL Auditada:</strong> <code>http://127.0.0.1:8000/testeapp/Pessoa/</code></p>
+            <p><strong>Data de Execução:</strong> 25/09/2025 às 13:16:47</p>
+            <p><strong>Pontos de Texto Checados:</strong> 8</p>
+
+            <h2>Sumário Executivo</h2>
+            <p>Este relatório apresenta os achados de Informações de Identificação Pessoal (**PII**) encontrados no endpoint da API auditado. Todos os valores de PII no detalhe foram **mascarados** para evitar risco de exposição no próprio relatório.</p>
+            <ul>
+                <li><strong>PII Confirmado/Válido (Alto Risco - VERMELHO):</strong> Inclui **E-mail** e **CPF com validação matemática OK**. Estes dados são classificados como PII de forma inequívoca.</li>
+                <li><strong>PII Suspeito (Risco Potencial - AMARELO/LARANJA):</strong> Inclui **CPF (11 dígitos, falha na matemática)**, **Telefone** e **Endereço Físico**. A identificação é baseada em padrões de regex.</li>
+            </ul>
+
+            <h2>Resumo Estatístico</h2>
+            <div class="summary-box">
+                <div class="summary-item valid">
+                    <span class="count">2</span>
+                    PII Confirmado / Válido (Alto Risco)
+                </div>
+                <div class="summary-item suspect">
+                    <span class="count">0</span>
+                    PII Suspeito (Risco Potencial)
+                </div>
+            </div>
+
+            <h2>Detalhes dos PII Confirmados/Válidos (2 Achados)</h2>
+            <p>Os valores encontrados abaixo foram **mascarados**. O valor completo original deve ser obtido através da checagem do *log* de execução ou da fonte de dados, usando o <strong>Caminho (Path)</strong>.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Caminho (Path) no JSON</th>
+                        <th>Tipo e Status</th>
+                        <th>Valor Mascarado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr class="pii-confirmed">
+            <td><code>[0].cpf</code></td>
+            <td>CPF VÁLIDO (Matemática OK)</td> 
+            <td>723******************61</td>
+        </tr>
+        
+        <tr class="pii-confirmed">
+            <td><code>[1].cpf</code></td>
+            <td>CPF VÁLIDO (Matemática OK)</td> 
+            <td>797******************04</td>
+        </tr>
+        
+                </tbody>
+            </table>
+
+            <h2>Detalhes dos PII Suspeitos (0 Achados)</h2>
+            <p>Estes dados foram identificados por padrões (Telefone, Endereço Físico) ou falharam na validação. Os valores também foram **mascarados**.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Caminho (Path) no JSON</th>
+                        <th>Tipo e Status</th>
+                        <th>Valor Mascarado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="3">Nenhum PII suspeito encontrado.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+    </html>
+    
