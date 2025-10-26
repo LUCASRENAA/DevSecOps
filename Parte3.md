@@ -46,4 +46,4 @@ STRIDE é o framework mais comum para categorizar e identificar ameaças em um s
 
 
 ## Exemplo prático
-- Link: https://github.com/LUCASRENAA/Dolar_Agora/blob/main/step4.md 
+- Link: https://github.com/LUCASRENAA/Dolar_Agora/blob/main/step4.md
