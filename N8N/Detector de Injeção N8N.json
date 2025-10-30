@@ -1,0 +1,261 @@
+{
+  "name": "Detector de Injeção N8N",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Envie aqui o código a ser analisado",
+        "formDescription": "Nosso sistema irá verificar se há dentro do código alguma vulnerabilidade do tipo Injection de acordo com o TOP 10 da OWASP",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Insira aqui",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "46740fdf-dfb8-4232-aef3-8f8bc7120826",
+      "name": "On form submission",
+      "webhookId": "99f03e03-05d5-4b0d-90e5-b7810f13ce6f"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega os dados de entrada\nconst item = $input.item;\n\n// 1. Ler o CÓDIGO (agora é um TEXTO simples do formulário)\nlet code = \"\";\ntry {\n  // DADOS AGORA VÊM DO JSON, NÃO DO BINARY\n  // O nome do campo é 'Insira aqui'\n  if (!item.json || !item.json['Insira aqui']) {\n    throw new Error(\"O campo 'Insira aqui' está vazio ou não foi encontrado.\");\n  }\n  \n  // A linha mais importante: apenas lemos o texto.\n  code = item.json['Insira aqui'];\n  \n} catch (error) {\n  // Se falhar a leitura, retorna um erro\n  return { error: \"Falha ao ler o código do formulário. \" + error.message };\n}\n\n// 2. Nossos padrões de Regex (Regras de Detecção)\n// ESTA PARTE NÃO MUDA. O Regex opera em texto.\nconst patterns = {\n  SQL_INJECTION: /(SELECT\\s+.*\\s+WHERE\\s+.*\\s*['\"]\\s*[\\.+]\\s*(\\w+))/gi,\n  COMMAND_INJECTION: /(exec|system|shell_exec|passthru)\\s*\\(\\s*.*?(\\$\\w+)/gi\n};\n\nlet findings = []; // Uma lista simples de achados\n\n// 3. Testar os padrões (NÃO MUDA)\nif (patterns.SQL_INJECTION.test(code)) {\n  findings.push(\"Potencial SQL Injection (Concatenação de String)\");\n}\n\nif (patterns.COMMAND_INJECTION.test(code)) {\n  findings.push(\"Potencial Command Injection (Uso de função perigosa)\");\n}\n\n// 4. Retornar a lista de achados para o próximo nó (NÃO MUDA)\nreturn {\n  findings: findings\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "88f00c61-a691-4091-9d80-69ef70916b89",
+      "name": "Analisador Regex"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4b686760-c0af-4484-8242-474754dfe217",
+              "leftValue": "={{ $json.findings.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "a7993cb1-dd1e-40a0-bb38-fc720b9584a3",
+      "name": "Achou Vulnerabilidade?"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um Consultor Sênior de Application Security (AppSec) e um especialista em DevSecOps. Sua missão é analisar o snippet de código a seguir, com base nos 10 riscos do OWASP Top 10 (2021).\n\nSua resposta DEVE ser um relatório técnico em Markdown, seguindo UMA das duas estruturas abaixo, SEM EXCEÇÃO.\n\nCódigo para Análise:\n---\n{{ $('On form submission').item.json['Insira aqui'] }}\n---\n\n---\n### ESTRUTURA 1: SE VULNERABILIDADES FOREM ENCONTRADAS{{ $json.findings }} NO CASO, DE FINDINGS VIR PREENCHIDO\n\n## 🚨 Relatório de Vulnerabilidade (OWASP)\n\n**Resumo:** Foram encontradas vulnerabilidades críticas no código analisado.\n\n### Detalhes da(s) Vulnerabilidade(s):\n\n---\n\n**1. Tipo (OWASP):** [Ex: A03: Injection]\n**Risco:** [Explique o risco de negócio em português. Ex: \"Um atacante pode roubar dados de todos os usuários...\"]\n**Trecho Vulnerável:**\n```[linguagem do código, ex: java ou php]\n[Cole AQUI a linha de código exata que está vulnerável]\n\n\n---\n\n## 📋 ESTRUTURA 2 — SE NENHUMA VULNERABILIDADE FOR ENCONTRADA\n\nNO CASO DE {{ $json.findings }} SER IGUAL A 0, VAZIO, NÃO VIR NADA, É POR QUE ESTÁ SEGURO, AÍ VOCE VAI MANDAR PARABÉNS DIZENDO QUE DEU TUDO CERTO VIU?????\n\n```markdown\n## 🛡️ Relatório de Análise Segura (OWASP)\n\n**Resumo:** Nenhuma vulnerabilidade foi identificada no trecho de código analisado.\n\n### Resultados da Avaliação\n\n- **Código analisado:** seguro dentro dos critérios do OWASP Top 10 (2021).  \n- **Validações Realizadas:**\n  - ✅ Injection (A03)\n  - ✅ Broken Authentication (A01)\n  - ✅ Sensitive Data Exposure (A02)\n  - ✅ Security Misconfiguration (A05)\n  - ✅ Cross-Site Scripting (A07)\n  - ✅ Deserialization / SSRF / etc.  \n- **Observações:**  \n  O código apresenta boas práticas de segurança e não expõe riscos evidentes.  \n  Continuar aplicando:\n  - Validação e sanitização de entradas.  \n  - Uso de criptografia adequada (TLS, hash, etc.).  \n  - Revisões periódicas de dependências e bibliotecas.  \n\n---\n\n### 🔒 Conclusão\n\nO snippet analisado **não apresenta vulnerabilidades conhecidas** de acordo com o OWASP Top 10 (2021).  \nMantenha revisões contínuas de código e práticas de DevSecOps preventivas.\n\n---\n\n**Assinado:** Consultor AppSec Virtual 🤖  \n**Base:** OWASP Top 10 (2021)\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        -144
+      ],
+      "id": "95097354-8d5d-46ed-8662-4e350d108a3c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        752,
+        -16
+      ],
+      "id": "6a7b465a-2bab-4131-9e59-ef7ead510b59",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3HZzcGRCMjOcLPsW",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\nVocê é um Consultor Sênior de Application Security (AppSec) e um especialista em DevSecOps. Sua missão é analisar o snippet de código a seguir, com base nos 10 riscos do OWASP Top 10 (2021).\n\nSua resposta DEVE ser um relatório técnico em Markdown, seguindo UMA das duas estruturas abaixo, SEM EXCEÇÃO.\n\nCódigo para Análise:\n---\n{{ $('On form submission').item.json['Insira aqui'] }}\n\n\nO código apresenta boas práticas de segurança e não expõe riscos aparentes.  \nRecomenda-se continuar aplicando:\n- Sanitização e validação de entradas.  \n- Uso de criptografia e hashing para dados sensíveis.  \n- Atualização contínua de dependências.  \n- Revisões de segurança periódicas com base no ciclo DevSecOps.  \n\n---\n\n### 🔒 Conclusão\n\nO snippet analisado **não apresenta vulnerabilidades conhecidas** de acordo com o OWASP Top 10 (2021).  \nMantenha as práticas de segurança contínua e revisões de código sob o princípio *Shift Left Security*.\n\n---\n\n**Assinado:** Consultor AppSec Virtual 🤖  \n**Base:** OWASP Top 10 (2021)  \n**Contexto:** Shift Left Security — Automação via n8n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        160
+      ],
+      "id": "c9b1f8d2-35ab-450e-b9c8-3c129ab8e7d4",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        768,
+        304
+      ],
+      "id": "88dd5bd5-96dd-4419-8d74-c2c61ea3b17b",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3HZzcGRCMjOcLPsW",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "encoding": "utf8",
+          "fileName": "Relatorio-OWASP.md"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        0
+      ],
+      "id": "648672f5-94a6-4504-9a47-3108691b49c1",
+      "name": "Convert to File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Analisador Regex",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analisador Regex": {
+      "main": [
+        [
+          {
+            "node": "Achou Vulnerabilidade?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Achou Vulnerabilidade?": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e946b2b1-e1df-417e-9767-2fade2ba281c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "648ea3840a56aa23cfcc3a2a88a78a8b8bcf32d032bbcd0370dfbd46d6fab6c8"
+  },
+  "id": "Q99rATi7KiRD6cNP",
+  "tags": []
+}

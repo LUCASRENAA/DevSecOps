@@ -1,0 +1,195 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Teste",
+        "formDescription": "teste",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Insira o Link a ser analisado"
+            },
+            {
+              "fieldLabel": "Qual e-mail você quer receber a análise?",
+              "fieldType": "email",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "08451d77-57d8-447d-8190-e7ec6d71be8d",
+      "name": "On form submission",
+      "webhookId": "32e65aae-3ff3-4b37-8af2-b7b301e8122e"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Insira o Link a ser analisado'] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        0
+      ],
+      "id": "b522ba06-ffae-44b1-ba34-37396c0cf66d",
+      "name": "HTTP Request",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um auditor de segurança web.\nAnalise os headers HTTP a seguir, encontrados no site {{ $json.url }}.\n\nGere um relatório legível contendo:\n1. Quais cabeçalhos estão ausentes e o impacto disso.\n2. Sugestões de correção.\n3. Uma nota de segurança de 0 a 10.\n4. Um resumo  CURTO, SUCINTO E RÁPIDO ,final amigável.\n\nRelatório técnico:\n{{ JSON.stringify($json.report, null, 2) }}\n\n\n\nresposta CURTAAAAAAAAA",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        0
+      ],
+      "id": "cf968967-ab6c-4ebb-8ed3-b70d9c42db6a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-thinking-exp",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        656,
+        192
+      ],
+      "id": "a6f334b6-b603-49ba-8143-ba818d0e7e65",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3HZzcGRCMjOcLPsW",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Captura os headers retornados pelo HTTP Request\nconst headers = $json;\n\n// Lista de headers de segurança importantes\nconst checks = [\n  'content-security-policy',\n  'x-frame-options',\n  'x-content-type-options',\n  'strict-transport-security',\n  'referrer-policy',\n  'permissions-policy'\n];\n\n// Recupera a URL enviada pelo formulário\nconst url = $('On form submission').first().json['Insira o Link a ser analisado'];\n\n// Cria relatório com status de cada header\nconst report = checks.map(header => ({\n  header,\n  exists: !!headers[header],\n  value: headers[header] || '❌ Ausente'\n}));\n\n// Retorna para os próximos nós (IA / Email)\nreturn [{\n  url,\n  report\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "1bf69cd7-095f-4482-8508-f48f4e6b20f2",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@pratics.me",
+        "toEmail": "={{ $('On form submission').item.json['Qual e-mail você quer receber a análise?'] }}",
+        "subject": "=Relatório de Segurança -  {{ $('On form submission').item.json['Insira o Link a ser analisado'] }}",
+        "html": "=<h2>🔍 Relatório de Segurança -{{ $('On form submission').item.json['Insira o Link a ser analisado'] }} </h2>\n<p>{{ $json.output }}</p>\n<hr>\n<small>Gerado automaticamente pelo n8n Auditor</small>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1024,
+        0
+      ],
+      "id": "6bf16c0e-2d30-4231-9a55-adc0fc8bcfb8",
+      "name": "Send email",
+      "webhookId": "94a3b2d3-c363-4ab8-961e-f38996039f13",
+      "credentials": {
+        "smtp": {
+          "id": "ewi0RnUReiWZ1jF5",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5a5b4e6a-53b8-4523-b7f5-4fb93c26b6c5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "648ea3840a56aa23cfcc3a2a88a78a8b8bcf32d032bbcd0370dfbd46d6fab6c8"
+  },
+  "id": "AtpfxjLJC1JpVgkc",
+  "tags": []
+}
